@@ -44,4 +44,17 @@ class DashboardTransactionController extends Controller
 
         return redirect()->route('dashboard-transaction-details', $id);
     }
+
+    public function confirm($id)
+    {
+        $transaction = TransactionDetail::findOrFail($id);
+
+        // Pastikan hanya bisa mengkonfirmasi transaksi dengan status 'SHIPPING'
+        if ($transaction->shipping_status === 'SHIPPING') {
+            $transaction->shipping_status = 'SELESAI';
+            $transaction->save();
+        }
+
+        return redirect()->route('dashboard-transaction-details', $id)->with('success', 'Pesanan telah dikonfirmasi.');
+    }
 }

@@ -116,17 +116,23 @@
                                                 @auth
                                                     @if (Auth::user()->store_status == '1')
                                                         <div class="col-12 col-md-3">
-                                                            <div class="product-title">Status Pengiriman</div>
-                                                            <select name="shipping_status" id="status" class="form-control"
-                                                                v-model="status">
-                                                                <option value="PENDING">Pending</option>
-                                                                <option value="SHIPPING">Shipping</option>
-                                                                <option value="SUCCESS">Success</option>
-                                                            </select>
+                                                            <div class="product-title">Status Pesanan</div>
+                                                            @if ($transaction->shipping_status === 'SELESAI')
+                                                                <div class="product-subtitle">
+                                                                    {{ $transaction->shipping_status }}
+                                                                </div>
+                                                            @else
+                                                                <select name="shipping_status" id="status"
+                                                                    class="form-control" v-model="status">
+                                                                    <option value="PENDING">Pending</option>
+                                                                    <option value="SHIPPING">Shipping</option>
+                                                                    {{-- <option value="SUCCESS">Success</option> --}}
+                                                                </select>
+                                                            @endif
                                                         </div>
                                                     @else
                                                         <div class="col-12 col-md-3">
-                                                            <div class="product-title">Status Pengiriman</div>
+                                                            <div class="product-title">Status Pesanan</div>
                                                             <div class="product-subtitle">
                                                                 {{ $transaction->shipping_status }}
                                                             </div>
@@ -158,12 +164,22 @@
                                                         </template>
                                                     @endif
                                                 @endauth
-
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- Tombol Konfirmasi Pesanan -->
                                     @auth
-                                        @if (Auth::user()->store_status == '1')
+                                        @if (Auth::user()->store_status == '0' && $transaction->shipping_status === 'SHIPPING')
+                                            <form action="{{ route('dashboard-transaction-confirm', $transaction->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                <input type="hidden" name="shipping_status" value="SELESAI">
+                                                <button type="submit" class="btn btn-success mt-4">Pesanan Selesai</button>
+                                            </form>
+                                        @endif
+                                    @endauth
+                                    @auth
+                                        @if (Auth::user()->store_status == '1' && $transaction->shipping_status !== 'SELESAI')
                                             <div class="row mt-4">
                                                 <div class="col-12 text-right">
                                                     <button type="submit" class="btn btn-success btn-lg mt-4">

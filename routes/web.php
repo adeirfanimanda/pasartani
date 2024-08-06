@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DashboardTransactionController;
+use App\Http\Controllers\InformationController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -7,6 +9,8 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/categories', 'CategoryController@index')->name('categories');
 Route::get('/categories/{id}', 'CategoryController@detail')->name('categories-detail');
+
+Route::get('/information', 'InformationController@index_user')->name('information');
 
 Route::get('/details/{id}', 'DetailController@index')->name('detail');
 Route::post('/details/{id}', 'DetailController@add')->name('detail-add');
@@ -36,10 +40,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard/transactions', 'DashboardTransactionController@index')->name('dashboard-transaction');
     Route::get('/dashboard/transactions/{id}', 'DashboardTransactionController@details')->name('dashboard-transaction-details');
     Route::post('/dashboard/transactions/{id}', 'DashboardTransactionController@update')->name('dashboard-transaction-update');
+    Route::post('/transaction/confirm/{id}', [DashboardTransactionController::class, 'confirm'])->name('dashboard-transaction-confirm');
 
     Route::get('/dashboard/settings', 'DashboardSettingController@store')->name('dashboard-settings-store');
     Route::get('/dashboard/account', 'DashboardSettingController@account')->name('dashboard-settings-account');
     Route::post('/dashboard/update/{redirect}', 'DashboardSettingController@update')->name('dashboard-settings-redirect');
+
+    Route::resource('/dashboard/informations', 'InformationController');
 });
 
 Route::prefix('admin')

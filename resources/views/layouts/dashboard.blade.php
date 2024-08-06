@@ -10,6 +10,8 @@
     <title>@yield('title')</title>
     <link rel="icon" href="/images/dashboard-store-logo.svg" type="image/x-icon" />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     @stack('prepend-style')
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <link href="/style/main.css" rel="stylesheet" />
@@ -35,6 +37,10 @@
                         <a href="{{ route('dashboard-product') }}"
                             class="list-group-item list-group-item-action {{ request()->is('dashboard/products*') ? 'active' : '' }} ">
                             Produk Saya
+                        </a>
+                        <a href="{{ route('informations.index') }}"
+                            class="list-group-item list-group-item-action {{ request()->is('dashboard/informations*') ? 'active' : '' }}">
+                            Informasi Saya
                         </a>
                     @endif
                     <a href="{{ route('dashboard-transaction') }}"

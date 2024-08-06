@@ -59,7 +59,7 @@
                                             <div class="product-subtitle">IDR</div>
                                         </td>
                                         <td style="width: 20%;">
-                                            <form action="{{ route('cart-delete', $cart->products_id) }}" method="POST">
+                                            <form action="{{ route('cart-delete', $cart->id) }}" method="POST">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button class="btn btn-remove-cart" type="submit">

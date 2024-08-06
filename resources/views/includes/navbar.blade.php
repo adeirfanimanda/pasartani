@@ -7,12 +7,15 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
+            {{-- <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a href="{{ route('home') }}" class="nav-link">Beranda</a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('categories') }}" class="nav-link">Kategori</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">Informasi</a>
                 </li>
                 @guest
                     <li class="nav-item">
@@ -22,7 +25,32 @@
                         <a href="{{ route('register') }}" class="btn btn-success nav-link px-4 text-white">Daftar</a>
                     </li>
                 @endguest
+            </ul> --}}
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="{{ route('home') }}"
+                        class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Beranda</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('categories') }}"
+                        class="nav-link {{ request()->routeIs('categories') ? 'active' : '' }}">Kategori</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('information') }}"
+                        class="nav-link {{ request()->routeIs('information') ? 'active' : '' }}">Informasi</a>
+                </li>
+                @guest
+                    <li class="nav-item">
+                        <a href="{{ route('login') }}"
+                            class="nav-link {{ request()->routeIs('login') ? 'active' : '' }}">Masuk</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('register') }}"
+                            class="btn btn-success nav-link px-4 text-white {{ request()->routeIs('register') ? 'active' : '' }}">Daftar</a>
+                    </li>
+                @endguest
             </ul>
+
 
             @auth
                 <!-- Desktop Menu -->
